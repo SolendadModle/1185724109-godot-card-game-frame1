@@ -81,8 +81,7 @@ func _on_button_button_down() -> void:
 		elif follow_target!=null:
 			follow_target.queue_free()
 		get_parent().get_parent().update_weight()
-		
-		pass # Replace with function body.
+
 
 var del
 func _on_button_button_up() -> void:
@@ -103,7 +102,6 @@ func _on_button_button_up() -> void:
 			
 	cardCurrentState = cardState.following
 	
-	pass # Replace with function body.
 
 func initCard(Nm) -> void:
 	cardInfo=CardInfos.infosDic[Nm]
@@ -132,5 +130,41 @@ func _on_all_button_button_down() -> void:
 	dup.cardCurrentState=cardState.vfs
 	cardCurrentState = cardState.dragging
 	if follow_target!=null:
-		follow_target.queue_free()	
-	pass # Replace with function body.
+		follow_target.queue_free()
+	follow_target = null
+
+func _on_all_button_button_up() -> void:
+	if dup!=null:
+		dup.queue_free()
+	if del:
+		#follow_target.queue_free()
+		self.queue_free()
+		print("deleted")
+		return
+	if whichDeckMouseIn!=null:
+		whichDeckMouseIn.add_card(self)
+	else:
+		if preDeck!=null:
+			preDeck.add_card(self)
+		else:
+			print("有一张卡牌没有preDeck，也没有whichDeckMouseIn，一般是由于点的太快导致的")
+			
+	cardCurrentState = cardState.following
+
+func _on_all_button_down() -> void:
+	if dup!=null:
+		dup.queue_free()
+	if del:
+		#follow_target.queue_free()
+		self.queue_free()
+		print("deleted")
+		return
+	if whichDeckMouseIn!=null:
+		whichDeckMouseIn.add_card(self)
+	else:
+		if preDeck!=null:
+			preDeck.add_card(self)
+		else:
+			print("有一张卡牌没有preDeck，也没有whichDeckMouseIn，一般是由于点的太快导致的")
+			
+	cardCurrentState = cardState.following
